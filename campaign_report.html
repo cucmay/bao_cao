@@ -1,0 +1,1944 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Báo cáo Hiệu quả Chiến dịch Marketing</title>
+  <style>
+    :root {
+      --bg: #f4f6fa;
+      --surface: #ffffff;
+      --surface-alt: #f8fafc;
+      --border: #e2e8f0;
+      --border-soft: #eef2f6;
+      --text: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --primary: #2563eb;
+      --primary-soft: #eff6ff;
+      --emerald: #059669;
+      --emerald-soft: #ecfdf5;
+      --amber: #d97706;
+      --amber-soft: #fffbeb;
+      --rose: #e11d48;
+      --rose-soft: #fff1f2;
+      --sky: #0284c7;
+      --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
+      --shadow-md: 0 6px 20px rgba(15, 23, 42, 0.06);
+      --radius: 14px;
+      --radius-sm: 9px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .container {
+      max-width: 1380px;
+      margin: 0 auto;
+      padding: 24px 24px 48px;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .header-title-group h1 {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .header-subtitle {
+      margin-top: 6px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-secondary);
+    }
+
+    .badge.live {
+      background: var(--emerald-soft);
+      border-color: #a7f3d0;
+      color: var(--emerald);
+    }
+
+    .badge-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .header-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      transition: all 0.15s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn:hover {
+      background: var(--surface-alt);
+      border-color: #cbd5e1;
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      background: #1d4ed8;
+      border-color: #1d4ed8;
+    }
+
+    /* Filter Bar */
+    .filter-bar {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      gap: 14px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      min-width: 150px;
+      flex: 1 1 150px;
+    }
+
+    .filter-group label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+    }
+
+    .filter-group select,
+    .filter-group input[type="date"],
+    .search-input {
+      height: 36px;
+      padding: 0 11px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface-alt);
+      color: var(--text);
+      font-size: 13px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.15s ease, background 0.15s ease;
+    }
+
+    .filter-group select:focus,
+    .filter-group input[type="date"]:focus,
+    .search-input:focus {
+      border-color: var(--primary);
+      background: #ffffff;
+    }
+
+    .filter-reset {
+      height: 36px;
+      padding: 0 14px;
+      flex: 0 0 auto;
+    }
+
+    /* KPI Grid */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 1200px) {
+      .kpi-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+    @media (max-width: 640px) {
+      .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    .kpi-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 18px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .kpi-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--accent, var(--primary));
+    }
+
+    .kpi-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .kpi-value {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      line-height: 1.2;
+    }
+
+    .kpi-sub {
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+    }
+
+    .pill-pos {
+      color: var(--emerald);
+      background: var(--emerald-soft);
+      padding: 2px 7px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 11px;
+    }
+
+    .pill-info {
+      color: var(--primary);
+      background: var(--primary-soft);
+      padding: 2px 7px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 11px;
+    }
+
+    /* Insights Strip */
+    .insights-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 1024px) {
+      .insights-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 600px) {
+      .insights-grid { grid-template-columns: 1fr; }
+    }
+
+    .insight-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 13px 15px;
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .insight-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .insight-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+    }
+
+    .insight-main {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-top: 2px;
+    }
+
+    .insight-desc {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    /* Charts Layout */
+    .charts-row {
+      display: grid;
+      gap: 18px;
+      margin-bottom: 20px;
+    }
+
+    .charts-row.primary-row {
+      grid-template-columns: minmax(0, 1.85fr) minmax(0, 1fr);
+    }
+
+    .charts-row.secondary-row {
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    }
+
+    @media (max-width: 1024px) {
+      .charts-row.primary-row,
+      .charts-row.secondary-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .card-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .card-subtitle {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .segmented {
+      display: inline-flex;
+      background: var(--surface-alt);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2px;
+    }
+
+    .segmented button {
+      border: none;
+      background: transparent;
+      padding: 5px 11px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-muted);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .segmented button.active {
+      background: var(--surface);
+      color: var(--text);
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
+    }
+
+    .chart-wrap {
+      width: 100%;
+      position: relative;
+    }
+
+    .chart-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 10px;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .legend-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .legend-swatch {
+      width: 10px;
+      height: 10px;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+
+    /* Donut Layout */
+    .donut-layout {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .donut-svg-wrap {
+      flex: 0 0 210px;
+      display: flex;
+      justify-content: center;
+      margin: 0 auto;
+    }
+
+    .donut-legend {
+      flex: 1 1 190px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .donut-legend-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 7px 10px;
+      border-radius: 8px;
+      background: var(--surface-alt);
+      cursor: pointer;
+      transition: background 0.15s ease;
+      font-size: 12.5px;
+    }
+
+    .donut-legend-row:hover {
+      background: #eef2ff;
+    }
+
+    .donut-legend-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .donut-legend-right {
+      text-align: right;
+    }
+
+    .donut-legend-val {
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .donut-legend-meta {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* Channel Comparison Bars */
+    .channel-bars {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .channel-bar-item {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .channel-bar-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 13px;
+      gap: 8px;
+    }
+
+    .channel-name {
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .channel-metrics {
+      font-size: 12px;
+      color: var(--text-secondary);
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .bar-track {
+      height: 11px;
+      background: var(--surface-alt);
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid var(--border-soft);
+      position: relative;
+    }
+
+    .bar-fill-rev {
+      height: 100%;
+      border-radius: 999px;
+      transition: width 0.35s ease;
+    }
+
+    .bar-fill-spend {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      background: rgba(15, 23, 42, 0.22);
+      border-radius: 999px;
+      transition: width 0.35s ease;
+    }
+
+    /* Funnel */
+    .funnel-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 4px;
+    }
+
+    .funnel-step {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .funnel-step-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+    }
+
+    .funnel-step-name {
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .funnel-step-nums {
+      font-size: 12.5px;
+      color: var(--text-secondary);
+    }
+
+    .funnel-step-nums strong {
+      color: var(--text);
+    }
+
+    .funnel-bar-bg {
+      height: 28px;
+      background: var(--surface-alt);
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      border: 1px solid var(--border-soft);
+    }
+
+    .funnel-bar-fill {
+      height: 100%;
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      padding-left: 10px;
+      color: #ffffff;
+      font-size: 11.5px;
+      font-weight: 700;
+      min-width: 54px;
+      transition: width 0.35s ease;
+    }
+
+    .funnel-arrow {
+      font-size: 11.5px;
+      color: var(--text-muted);
+      padding-left: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Table */
+    .table-controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      min-width: 920px;
+    }
+
+    thead th {
+      background: var(--surface-alt);
+      color: var(--text-muted);
+      font-size: 11.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      padding: 11px 12px;
+      text-align: right;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      user-select: none;
+      white-space: nowrap;
+    }
+
+    thead th:hover {
+      color: var(--text);
+      background: #f1f5f9;
+    }
+
+    thead th.left, tbody td.left, tfoot td.left {
+      text-align: left;
+    }
+
+    tbody td {
+      padding: 11px 12px;
+      border-bottom: 1px solid var(--border-soft);
+      text-align: right;
+      color: var(--text);
+      white-space: nowrap;
+    }
+
+    tbody tr:hover {
+      background: #f8fafc;
+    }
+
+    tfoot td {
+      padding: 12px;
+      background: #f1f5f9;
+      font-weight: 800;
+      text-align: right;
+      border-top: 2px solid var(--border);
+      white-space: nowrap;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 11.5px;
+      font-weight: 700;
+    }
+
+    .status-running { background: var(--emerald-soft); color: var(--emerald); }
+    .status-done { background: var(--primary-soft); color: var(--primary); }
+    .status-paused { background: var(--amber-soft); color: var(--amber); }
+
+    .roas-pill {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+    .roas-high { background: var(--emerald-soft); color: var(--emerald); }
+    .roas-mid { background: var(--primary-soft); color: var(--primary); }
+    .roas-low { background: var(--amber-soft); color: var(--amber); }
+
+    .channel-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .channel-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    /* Tooltip */
+    .tooltip {
+      position: fixed;
+      pointer-events: none;
+      z-index: 999;
+      background: rgba(15, 23, 42, 0.96);
+      color: #f8fafc;
+      padding: 10px 13px;
+      border-radius: 10px;
+      font-size: 12px;
+      line-height: 1.5;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.28);
+      opacity: 0;
+      transition: opacity 0.1s ease;
+      max-width: 260px;
+    }
+
+    .tooltip.visible { opacity: 1; }
+
+    .tooltip-title {
+      font-weight: 700;
+      font-size: 12.5px;
+      margin-bottom: 5px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    .tooltip-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .tooltip-row span:first-child { color: #cbd5e1; }
+    .tooltip-row span:last-child { font-weight: 700; }
+
+    /* Dropzone Overlay */
+    .drop-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(37, 99, 235, 0.12);
+      backdrop-filter: blur(3px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .drop-overlay.active { display: flex; }
+
+    .drop-box {
+      background: #ffffff;
+      border: 2px dashed var(--primary);
+      border-radius: 18px;
+      padding: 40px 56px;
+      text-align: center;
+      box-shadow: var(--shadow-md);
+    }
+
+    .drop-box h2 {
+      font-size: 20px;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+
+    .drop-box p {
+      font-size: 13.5px;
+      color: var(--text-secondary);
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 36px 20px;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .footer-note {
+      margin-top: 22px;
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    @media print {
+      body { background: #ffffff; }
+      .header-actions, .filter-bar, .segmented, .search-input { display: none !important; }
+      .card, .kpi-card, .insight-card { box-shadow: none; break-inside: avoid; }
+      .container { padding: 0; max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div id="dropOverlay" class="drop-overlay">
+    <div class="drop-box">
+      <h2>Thả file CSV vào đây</h2>
+      <p>Hệ thống sẽ tự động phân tích và cập nhật toàn bộ biểu đồ báo cáo</p>
+    </div>
+  </div>
+
+  <div id="tooltip" class="tooltip"></div>
+
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-title-group">
+        <h1>Báo cáo Hiệu quả Chiến dịch Marketing</h1>
+        <div class="header-subtitle">
+          <span id="dateRangeBadge" class="badge">Đang tải...</span>
+          <span id="dataSourceBadge" class="badge live">
+            <span class="badge-dot"></span>
+            <span id="dataSourceText">Dữ liệu mẫu: campaign_data.csv</span>
+          </span>
+          <span id="rowCountBadge" class="badge">0 bản ghi</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <input type="file" id="csvFileInput" accept=".csv,text/csv" hidden />
+        <button class="btn btn-primary" id="uploadBtn" title="Tải file CSV từ máy tính để trực quan hóa">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Tải file CSV
+        </button>
+        <button class="btn" id="downloadBtn" title="Tải xuống dữ liệu hiện tại dạng CSV">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Xuất CSV
+        </button>
+        <button class="btn" onclick="window.print()" title="In hoặc lưu báo cáo dưới dạng PDF">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          In / PDF
+        </button>
+      </div>
+    </header>
+
+    <!-- Filters -->
+    <section class="filter-bar">
+      <div class="filter-group">
+        <label for="filterChannel">Kênh triển khai</label>
+        <select id="filterChannel"><option value="ALL">Tất cả kênh</option></select>
+      </div>
+      <div class="filter-group">
+        <label for="filterRegion">Khu vực</label>
+        <select id="filterRegion"><option value="ALL">Tất cả khu vực</option></select>
+      </div>
+      <div class="filter-group">
+        <label for="filterStatus">Trạng thái</label>
+        <select id="filterStatus"><option value="ALL">Tất cả trạng thái</option></select>
+      </div>
+      <div class="filter-group">
+        <label for="filterStart">Từ ngày</label>
+        <input type="date" id="filterStart" />
+      </div>
+      <div class="filter-group">
+        <label for="filterEnd">Đến ngày</label>
+        <input type="date" id="filterEnd" />
+      </div>
+      <button class="btn filter-reset" id="resetFiltersBtn">Đặt lại</button>
+    </section>
+
+    <!-- KPI Cards -->
+    <section class="kpi-grid" id="kpiGrid"></section>
+
+    <!-- Automated Insights -->
+    <section class="insights-grid" id="insightsGrid"></section>
+
+    <!-- Row 1 Charts: Daily Trend + Revenue Share Donut -->
+    <section class="charts-row primary-row">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title" id="trendChartTitle">Xu hướng Doanh thu & Chi phí theo ngày</div>
+            <div class="card-subtitle">Di chuột vào từng mốc ngày để xem chi tiết hiệu suất</div>
+          </div>
+          <div class="segmented" id="trendModeToggle">
+            <button class="active" data-mode="finance">Doanh thu & Chi phí</button>
+            <button data-mode="traffic">Nhấp chuột & Chuyển đổi</button>
+          </div>
+        </div>
+        <div class="chart-wrap" id="trendChartWrap"></div>
+        <div class="chart-legend" id="trendLegend"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Cơ cấu Doanh thu theo Kênh</div>
+            <div class="card-subtitle">Nhấp vào kênh ở chú giải để lọc nhanh</div>
+          </div>
+        </div>
+        <div class="donut-layout" id="donutWrap"></div>
+      </div>
+    </section>
+
+    <!-- Row 2 Charts: Channel Comparison + Conversion Funnel -->
+    <section class="charts-row secondary-row">
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Hiệu suất theo Kênh (Doanh thu vs Chi phí & ROAS)</div>
+            <div class="card-subtitle">Thanh màu thể hiện Doanh thu, phần phủ tối bên trái là Chi phí quảng cáo</div>
+          </div>
+        </div>
+        <div class="channel-bars" id="channelBarsWrap"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Phễu Chuyển đổi Chiến dịch</div>
+            <div class="card-subtitle">Tỷ lệ chuyển đổi qua từng bước hành trình khách hàng</div>
+          </div>
+        </div>
+        <div class="funnel-list" id="funnelWrap"></div>
+      </div>
+    </section>
+
+    <!-- Data Table -->
+    <section class="card">
+      <div class="table-controls">
+        <div>
+          <div class="card-title">Bảng Chi tiết Hiệu quả Chiến dịch</div>
+          <div class="card-subtitle">Nhấp tiêu đề cột để sắp xếp tăng/giảm dần</div>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;">
+          <input type="text" id="tableSearch" class="search-input" placeholder="Tìm tên hoặc mã chiến dịch..." />
+          <div class="segmented" id="tableViewToggle">
+            <button class="active" data-view="campaign">Theo chiến dịch</button>
+            <button data-view="daily">Chi tiết theo ngày</button>
+          </div>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table id="dataTable">
+          <thead id="tableHead"></thead>
+          <tbody id="tableBody"></tbody>
+          <tfoot id="tableFoot"></tfoot>
+        </table>
+      </div>
+    </section>
+
+    <p class="footer-note">
+      Gợi ý: Bạn có thể kéo thả file <strong>campaign_data.csv</strong> (hoặc file CSV cùng cấu trúc cột) trực tiếp vào trang này để cập nhật báo cáo tức thì.
+    </p>
+  </div>
+
+  <!-- Embedded sample CSV fallback (syncs automatically with campaign_data.csv when served via HTTP) -->
+  <script id="embeddedCsvData" type="text/csv">date,campaign_id,campaign_name,channel,region,status,impressions,clicks,leads,conversions,spend_vnd,revenue_vnd
+2026-10-20,CMP-01,Ra mắt BST Thu Đông,Facebook Ads,Miền Nam,Đang chạy,82400,1980,310,74,6200000,17800000
+2026-10-20,CMP-02,Tìm kiếm Thương hiệu & SP,Google Search,Toàn quốc,Đang chạy,14200,980,225,86,4800000,22400000
+2026-10-20,CMP-03,Video Viral Flash Sale,TikTok Ads,Miền Bắc,Đang chạy,112000,1920,245,48,5400000,11200000
+2026-10-20,CMP-04,Retargeting Giỏ hàng,Facebook Ads,Toàn quốc,Đang chạy,26800,1040,210,78,2800000,16500000
+2026-10-20,CMP-05,Chăm sóc KH Thân thiết,Email Marketing,Toàn quốc,Đang chạy,8500,790,195,72,500000,14200000
+2026-10-20,CMP-06,Ưu đãi Thành viên OA,Zalo Ads,Miền Nam,Đang chạy,22400,670,138,44,2100000,7600000
+2026-10-21,CMP-01,Ra mắt BST Thu Đông,Facebook Ads,Miền Nam,Đang chạy,85600,2110,332,81,6400000,19400000
+2026-10-21,CMP-02,Tìm kiếm Thương hiệu & SP,Google Search,Toàn quốc,Đang chạy,15100,1060,242,92,5000000,24100000
+2026-10-21,CMP-03,Video Viral Flash Sale,TikTok Ads,Miền Bắc,Đang chạy,118500,2130,274,56,5600000,12800000
+2026-10-21,CMP-04,Retargeting Giỏ hàng,Facebook Ads,Toàn quốc,Đang chạy,27900,1105,228,84,2900000,17900000
+2026-10-21,CMP-05,Chăm sóc KH Thân thiết,Email Marketing,Toàn quốc,Đang chạy,8700,820,204,76,500000,15100000
+2026-10-21,CMP-06,Ưu đãi Thành viên OA,Zalo Ads,Miền Nam,Đang chạy,23600,720,146,48,2200000,8200000
+2026-10-22,CMP-01,Ra mắt BST Thu Đông,Facebook Ads,Miền Nam,Đang chạy,88900,2240,350,86,6600000,20600000
+2026-10-22,CMP-02,Tìm kiếm Thương hiệu & SP,Google Search,Toàn quốc,Đang chạy,15800,1120,256,98,5200000,25800000
+2026-10-22,CMP-03,Video Viral Flash Sale,TikTok Ads,Miền Bắc,Đang chạy,126000,2340,302,64,5900000,14500000
+2026-10-22,CMP-04,Retargeting Giỏ hàng,Facebook Ads,Toàn quốc,Đang chạy,29100,1160,242,89,3000000,19200000
+2026-10-22,CMP-05,Chăm sóc KH Thân thiết,Email Marketing,Toàn quốc,Đang chạy,8900,855,212,80,520000,15800000
+2026-10-22,CMP-06,Ưu đãi Thành viên OA,Zalo Ads,Miền Nam,Đang chạy,24200,745,152,51,2250000,8700000
+2026-10-23,CMP-01,Ra mắt BST Thu Đông,Facebook Ads,Miền Nam,Đang chạy,91200,2310,362,90,6800000,21800000
+2026-10-23,CMP-02,Tìm kiếm Thương hiệu & SP,Google Search,Toàn quốc,Đang chạy,16400,1175,270,104,5400000,27300000
+2026-10-23,CMP-03,Video Viral Flash Sale,TikTok Ads,Miền Bắc,Đang chạy,135000,2560,335,72,6300000,16400000
+2026-10-23,CMP-04,Retargeting Giỏ hàng,Facebook Ads,Toàn quốc,Đang chạy,30400,1220,255,95,3150000,20500000
+2026-10-23,CMP-05,Chăm sóc KH Thân thiết,Email Marketing,Toàn quốc,Đang chạy,9200,890,224,85,550000,16900000
+2026-10-23,CMP-06,Ưu đãi Thành viên OA,Zalo Ads,Miền Nam,Đang chạy,25100,780,160,54,2300000,9200000
+2026-10-24,CMP-01,Ra mắt BST Thu Đông,Facebook Ads,Miền Nam,Đang chạy,98500,2540,405,102,7300000,24800000
+2026-10-24,CMP-02,Tìm kiếm Thương hiệu & SP,Google Search,Toàn quốc,Đang chạy,17900,1290,302,118,5800000,30800000
+2026-10-24,CMP-03,Video Viral Flash Sale,TikTok Ads,Miền Bắc,Đang chạy,154000,3020,410,92,7100000,20900000
+2026-10-24,CMP-04,Retargeting Giỏ hàng,Facebook Ads,Toàn quốc,Đang chạy,33600,1380,295,112,3500000,24100000
+2026-10-24,CMP-05,Chăm sóc KH Thân thiết,Email Marketing,Toàn quốc,Đang chạy,9800,960,248,96,580000,19200000
+2026-10-24,CMP-06,Ưu đãi Thành viên OA,Zalo Ads,Miền Nam,Đang chạy,26800,840,174,60,2450000,10300000
+2026-10-25,CMP-01,Ra mắt BST Thu Đông,Facebook Ads,Miền Nam,Đang chạy,118000,3180,520,136,8600000,32900000
+2026-10-25,CMP-02,Tìm kiếm Thương hiệu & SP,Google Search,Toàn quốc,Đang chạy,21500,1620,388,156,6900000,40600000
+2026-10-25,CMP-03,Video Viral Flash Sale,TikTok Ads,Miền Bắc,Đang chạy,192000,4030,575,142,8800000,31800000
+2026-10-25,CMP-04,Retargeting Giỏ hàng,Facebook Ads,Toàn quốc,Đang chạy,41200,1780,392,154,4300000,33200000
+2026-10-25,CMP-05,Chăm sóc KH Thân thiết,Email Marketing,Toàn quốc,Đang chạy,11200,1180,315,128,650000,25600000
+2026-10-25,CMP-06,Ưu đãi Thành viên OA,Zalo Ads,Miền Nam,Đang chạy,31400,1040,222,79,2900000,13600000
+2026-10-26,CMP-01,Ra mắt BST Thu Đông,Facebook Ads,Miền Nam,Đang chạy,122500,3310,545,144,8900000,34800000
+2026-10-26,CMP-02,Tìm kiếm Thương hiệu & SP,Google Search,Toàn quốc,Đang chạy,22400,1705,412,165,7200000,43200000
+2026-10-26,CMP-03,Video Viral Flash Sale,TikTok Ads,Miền Bắc,Đang chạy,205000,4320,620,158,9200000,35100000
+2026-10-26,CMP-04,Retargeting Giỏ hàng,Facebook Ads,Toàn quốc,Đang chạy,42800,1860,410,162,4500000,35100000
+2026-10-26,CMP-05,Chăm sóc KH Thân thiết,Email Marketing,Toàn quốc,Đang chạy,11500,1210,326,134,650000,26800000
+2026-10-26,CMP-06,Ưu đãi Thành viên OA,Zalo Ads,Miền Nam,Đang chạy,32200,1075,230,82,2950000,14100000
+2026-10-27,CMP-01,Ra mắt BST Thu Đông,Facebook Ads,Miền Nam,Đang chạy,104000,2710,430,110,7500000,26700000
+2026-10-27,CMP-02,Tìm kiếm Thương hiệu & SP,Google Search,Toàn quốc,Đang chạy,18900,1390,326,128,6100000,33400000
+2026-10-27,CMP-03,Video Viral Flash Sale,TikTok Ads,Miền Bắc,Đang chạy,168000,3340,462,108,7600000,24200000
+2026-10-27,CMP-04,Retargeting Giỏ hàng,Facebook Ads,Toàn quốc,Đang chạy,36500,1520,330,126,3800000,27200000
+2026-10-27,CMP-05,Chăm sóc KH Thân thiết,Email Marketing,Toàn quốc,Đang chạy,10100,1020,268,105,600000,21000000
+2026-10-27,CMP-06,Ưu đãi Thành viên OA,Zalo Ads,Miền Nam,Tạm dừng,18400,560,112,38,1650000,6600000
+2026-10-28,CMP-01,Ra mắt BST Thu Đông,Facebook Ads,Miền Nam,Đang chạy,96200,2480,392,98,7000000,23900000
+2026-10-28,CMP-02,Tìm kiếm Thương hiệu & SP,Google Search,Toàn quốc,Đang chạy,17600,1280,298,116,5700000,30200000
+2026-10-28,CMP-03,Video Viral Flash Sale,TikTok Ads,Miền Bắc,Đang chạy,149000,2890,395,88,6800000,19800000
+2026-10-28,CMP-04,Retargeting Giỏ hàng,Facebook Ads,Toàn quốc,Đang chạy,34200,1410,302,115,3550000,24900000
+2026-10-28,CMP-05,Chăm sóc KH Thân thiết,Email Marketing,Toàn quốc,Hoàn thành,9400,930,242,92,550000,18400000
+2026-10-28,CMP-06,Ưu đãi Thành viên OA,Zalo Ads,Miền Nam,Tạm dừng,12200,360,72,24,1100000,4200000
+2026-10-29,CMP-01,Ra mắt BST Thu Đông,Facebook Ads,Miền Nam,Hoàn thành,93800,2410,380,95,6800000,23100000
+2026-10-29,CMP-02,Tìm kiếm Thương hiệu & SP,Google Search,Toàn quốc,Đang chạy,18100,1325,310,122,5850000,31800000
+2026-10-29,CMP-03,Video Viral Flash Sale,TikTok Ads,Miền Bắc,Hoàn thành,142000,2760,378,84,6500000,18900000
+2026-10-29,CMP-04,Retargeting Giỏ hàng,Facebook Ads,Toàn quốc,Đang chạy,33800,1395,298,114,3500000,24600000
+2026-10-29,CMP-05,Chăm sóc KH Thân thiết,Email Marketing,Toàn quốc,Hoàn thành,9100,895,230,88,520000,17600000
+2026-10-29,CMP-06,Ưu đãi Thành viên OA,Zalo Ads,Miền Nam,Tạm dừng,9800,285,56,18,880000,3100000</script>
+
+  <script>
+    const CHANNEL_COLORS = {
+      "Facebook Ads": "#2563eb",
+      "Google Search": "#059669",
+      "TikTok Ads": "#e11d48",
+      "Email Marketing": "#d97706",
+      "Zalo Ads": "#0284c7"
+    };
+    const FALLBACK_PALETTE = ["#7c3aed", "#0d9488", "#ea580c", "#4f46e5", "#db2777"];
+
+    const state = {
+      rawCsv: "",
+      rows: [],
+      sourceLabel: "Dữ liệu mẫu: campaign_data.csv",
+      filters: { channel: "ALL", region: "ALL", status: "ALL", start: "", end: "" },
+      trendMode: "finance",
+      tableView: "campaign",
+      search: "",
+      sortKey: "revenue_vnd",
+      sortDir: "desc"
+    };
+
+    const $ = (id) => document.getElementById(id);
+
+    function getChannelColor(channel) {
+      if (CHANNEL_COLORS[channel]) return CHANNEL_COLORS[channel];
+      let hash = 0;
+      for (let i = 0; i < channel.length; i++) hash = (hash * 31 + channel.charCodeAt(i)) | 0;
+      return FALLBACK_PALETTE[Math.abs(hash) % FALLBACK_PALETTE.length];
+    }
+
+    function escapeHtml(str) {
+      return String(str ?? "").replace(/[&<>"']/g, (m) => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      }[m]));
+    }
+
+    function fmtNum(n) {
+      return Math.round(n || 0).toLocaleString("vi-VN");
+    }
+
+    function fmtMoney(n) {
+      return Math.round(n || 0).toLocaleString("vi-VN") + " ₫";
+    }
+
+    function fmtCompactMoney(n) {
+      const abs = Math.abs(n || 0);
+      if (abs >= 1e9) return (n / 1e9).toFixed(2).replace(".", ",") + " tỷ ₫";
+      if (abs >= 1e6) return (n / 1e6).toFixed(1).replace(".", ",") + " tr ₫";
+      if (abs >= 1e3) return (n / 1e3).toFixed(0) + "k ₫";
+      return fmtMoney(n);
+    }
+
+    function fmtCompactNum(n) {
+      const abs = Math.abs(n || 0);
+      if (abs >= 1e6) return (n / 1e6).toFixed(2).replace(".", ",") + "M";
+      if (abs >= 1e3) return (n / 1e3).toFixed(1).replace(".", ",") + "K";
+      return fmtNum(n);
+    }
+
+    function fmtPct(v) {
+      return (v * 100).toFixed(2).replace(".", ",") + "%";
+    }
+
+    function fmtDateShort(iso) {
+      if (!iso || iso.length < 10) return iso;
+      const [y, m, d] = iso.split("-");
+      return `${d}/${m}`;
+    }
+
+    function fmtDateFull(iso) {
+      if (!iso || iso.length < 10) return iso;
+      const [y, m, d] = iso.split("-");
+      return `${d}/${m}/${y}`;
+    }
+
+    // RFC-4180 CSV parser
+    function parseCsv(text) {
+      const clean = text.replace(/^\uFEFF/, "").trim();
+      if (!clean) return [];
+      const rows = [];
+      let row = [], field = "", inQuotes = false;
+      for (let i = 0; i < clean.length; i++) {
+        const ch = clean[i], next = clean[i + 1];
+        if (inQuotes) {
+          if (ch === '"' && next === '"') { field += '"'; i++; }
+          else if (ch === '"') { inQuotes = false; }
+          else { field += ch; }
+        } else {
+          if (ch === '"') { inQuotes = true; }
+          else if (ch === ",") { row.push(field.trim()); field = ""; }
+          else if (ch === "\n") { row.push(field.trim()); rows.push(row); row = []; field = ""; }
+          else if (ch !== "\r") { field += ch; }
+        }
+      }
+      if (field.length || row.length) { row.push(field.trim()); rows.push(row); }
+      if (rows.length < 2) return [];
+      const headers = rows[0].map((h) => h.trim());
+      return rows.slice(1).filter((r) => r.some(Boolean)).map((r) => {
+        const obj = {};
+        headers.forEach((h, idx) => { obj[h] = r[idx] ?? ""; });
+        return {
+          date: obj.date || "",
+          campaign_id: obj.campaign_id || "",
+          campaign_name: obj.campaign_name || obj.campaign_id || "Không tên",
+          channel: obj.channel || "Khác",
+          region: obj.region || "Toàn quốc",
+          status: obj.status || "Đang chạy",
+          impressions: Number(obj.impressions) || 0,
+          clicks: Number(obj.clicks) || 0,
+          leads: Number(obj.leads) || 0,
+          conversions: Number(obj.conversions) || 0,
+          spend_vnd: Number(obj.spend_vnd) || 0,
+          revenue_vnd: Number(obj.revenue_vnd) || 0
+        };
+      });
+    }
+
+    function loadCsvData(csvText, sourceLabel) {
+      const parsed = parseCsv(csvText);
+      if (!parsed.length) {
+        alert("Không thể đọc dữ liệu CSV. Vui lòng kiểm tra lại định dạng cột.");
+        return;
+      }
+      state.rawCsv = csvText;
+      state.rows = parsed;
+      state.sourceLabel = sourceLabel;
+      populateFilterOptions();
+      renderAll();
+    }
+
+    function populateFilterOptions() {
+      const channels = [...new Set(state.rows.map((r) => r.channel))].sort();
+      const regions = [...new Set(state.rows.map((r) => r.region))].sort();
+      const statuses = [...new Set(state.rows.map((r) => r.status))].sort();
+      const dates = [...new Set(state.rows.map((r) => r.date))].filter(Boolean).sort();
+
+      const fillSelect = (el, items, allLabel) => {
+        el.innerHTML = `<option value="ALL">${allLabel}</option>` +
+          items.map((v) => `<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`).join("");
+      };
+
+      fillSelect($("filterChannel"), channels, "Tất cả kênh");
+      fillSelect($("filterRegion"), regions, "Tất cả khu vực");
+      fillSelect($("filterStatus"), statuses, "Tất cả trạng thái");
+
+      const minDate = dates[0] || "";
+      const maxDate = dates[dates.length - 1] || "";
+      $("filterStart").min = minDate;
+      $("filterStart").max = maxDate;
+      $("filterStart").value = minDate;
+      $("filterEnd").min = minDate;
+      $("filterEnd").max = maxDate;
+      $("filterEnd").value = maxDate;
+
+      state.filters = { channel: "ALL", region: "ALL", status: "ALL", start: minDate, end: maxDate };
+    }
+
+    function getFilteredRows() {
+      const { channel, region, status, start, end } = state.filters;
+      return state.rows.filter((r) => {
+        if (channel !== "ALL" && r.channel !== channel) return false;
+        if (region !== "ALL" && r.region !== region) return false;
+        if (status !== "ALL" && r.status !== status) return false;
+        if (start && r.date < start) return false;
+        if (end && r.date > end) return false;
+        return true;
+      });
+    }
+
+    function summarize(rows) {
+      const t = rows.reduce((acc, r) => {
+        acc.impressions += r.impressions;
+        acc.clicks += r.clicks;
+        acc.leads += r.leads;
+        acc.conversions += r.conversions;
+        acc.spend_vnd += r.spend_vnd;
+        acc.revenue_vnd += r.revenue_vnd;
+        return acc;
+      }, { impressions: 0, clicks: 0, leads: 0, conversions: 0, spend_vnd: 0, revenue_vnd: 0 });
+      t.ctr = t.impressions ? t.clicks / t.impressions : 0;
+      t.cvr = t.clicks ? t.conversions / t.clicks : 0;
+      t.roas = t.spend_vnd ? t.revenue_vnd / t.spend_vnd : 0;
+      t.cpa = t.conversions ? t.spend_vnd / t.conversions : 0;
+      t.cpc = t.clicks ? t.spend_vnd / t.clicks : 0;
+      t.profit = t.revenue_vnd - t.spend_vnd;
+      t.cir = t.revenue_vnd ? t.spend_vnd / t.revenue_vnd : 0;
+      return t;
+    }
+
+    // Tooltip helpers
+    const tooltipEl = $("tooltip");
+    function showTooltip(evt, title, rows) {
+      tooltipEl.innerHTML = `<div class="tooltip-title">${escapeHtml(title)}</div>` +
+        rows.map(([k, v]) => `<div class="tooltip-row"><span>${escapeHtml(k)}</span><span>${escapeHtml(v)}</span></div>`).join("");
+      tooltipEl.classList.add("visible");
+      moveTooltip(evt);
+    }
+    function moveTooltip(evt) {
+      const pad = 14;
+      const rect = tooltipEl.getBoundingClientRect();
+      let left = evt.clientX + pad;
+      let top = evt.clientY - rect.height / 2;
+      if (left + rect.width > window.innerWidth - 10) left = evt.clientX - rect.width - pad;
+      if (top < 10) top = 10;
+      if (top + rect.height > window.innerHeight - 10) top = window.innerHeight - rect.height - 10;
+      tooltipEl.style.left = left + "px";
+      tooltipEl.style.top = top + "px";
+    }
+    function hideTooltip() {
+      tooltipEl.classList.remove("visible");
+    }
+
+    function renderAll() {
+      const rows = getFilteredRows();
+      const dates = [...new Set(rows.map((r) => r.date))].sort();
+      $("dataSourceText").textContent = state.sourceLabel;
+      $("rowCountBadge").textContent = `${rows.length} bản ghi`;
+      $("dateRangeBadge").textContent = dates.length
+        ? `${fmtDateFull(dates[0])} — ${fmtDateFull(dates[dates.length - 1])} (${dates.length} ngày)`
+        : "Không có dữ liệu phù hợp";
+
+      const totals = summarize(rows);
+      renderKpis(totals, dates.length);
+      renderInsights(rows, totals);
+      renderTrendChart(rows);
+      renderDonutChart(rows, totals);
+      renderChannelBars(rows);
+      renderFunnel(totals);
+      renderTable(rows);
+    }
+
+    function renderKpis(t, numDays) {
+      const avgDailyRev = numDays ? t.revenue_vnd / numDays : 0;
+      const cards = [
+        {
+          label: "Tổng Doanh thu",
+          value: fmtCompactMoney(t.revenue_vnd),
+          subLeft: `TB ${fmtCompactMoney(avgDailyRev)}/ngày`,
+          subBadge: `Lãi ${fmtCompactMoney(t.profit)}`,
+          badgeClass: "pill-pos",
+          accent: "#059669"
+        },
+        {
+          label: "Tổng Chi phí Ads",
+          value: fmtCompactMoney(t.spend_vnd),
+          subLeft: `CIR ${fmtPct(t.cir)}`,
+          subBadge: "Chi phí / DT",
+          badgeClass: "pill-info",
+          accent: "#2563eb"
+        },
+        {
+          label: "ROAS Trung bình",
+          value: t.roas.toFixed(2).replace(".", ",") + "x",
+          subLeft: "Doanh thu / 1đ chi",
+          subBadge: t.roas >= 4 ? "Rất tốt" : t.roas >= 2.5 ? "Ổn định" : "Cần tối ưu",
+          badgeClass: t.roas >= 2.5 ? "pill-pos" : "pill-info",
+          accent: "#7c3aed"
+        },
+        {
+          label: "Tổng Chuyển đổi",
+          value: fmtNum(t.conversions),
+          subLeft: `CPA ${fmtCompactMoney(t.cpa)}`,
+          subBadge: `CVR ${fmtPct(t.cvr)}`,
+          badgeClass: "pill-pos",
+          accent: "#e11d48"
+        },
+        {
+          label: "Lượt nhấp (Clicks)",
+          value: fmtCompactNum(t.clicks),
+          subLeft: `CPC ${fmtMoney(t.cpc)}`,
+          subBadge: `CTR ${fmtPct(t.ctr)}`,
+          badgeClass: "pill-info",
+          accent: "#0284c7"
+        },
+        {
+          label: "Lượt hiển thị",
+          value: fmtCompactNum(t.impressions),
+          subLeft: `${fmtNum(t.leads)} leads thu về`,
+          subBadge: `Lead ${t.clicks ? fmtPct(t.leads / t.clicks) : "0%"}`,
+          badgeClass: "pill-info",
+          accent: "#d97706"
+        }
+      ];
+
+      $("kpiGrid").innerHTML = cards.map((c) => `
+        <div class="kpi-card" style="--accent:${c.accent}">
+          <div class="kpi-label">${c.label}</div>
+          <div class="kpi-value">${c.value}</div>
+          <div class="kpi-sub">
+            <span>${c.subLeft}</span>
+            <span class="${c.badgeClass}">${c.subBadge}</span>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function renderInsights(rows, totals) {
+      if (!rows.length) {
+        $("insightsGrid").innerHTML = "";
+        return;
+      }
+
+      // Group by channel
+      const byChannel = {};
+      const byCampaign = {};
+      const byDate = {};
+      rows.forEach((r) => {
+        if (!byChannel[r.channel]) byChannel[r.channel] = [];
+        byChannel[r.channel].push(r);
+        if (!byCampaign[r.campaign_id]) byCampaign[r.campaign_id] = { name: r.campaign_name, channel: r.channel, rows: [] };
+        byCampaign[r.campaign_id].rows.push(r);
+        if (!byDate[r.date]) byDate[r.date] = [];
+        byDate[r.date].push(r);
+      });
+
+      const channelStats = Object.entries(byChannel).map(([name, list]) => ({ name, ...summarize(list) }));
+      const campaignStats = Object.entries(byCampaign).map(([id, obj]) => ({ id, name: obj.name, channel: obj.channel, ...summarize(obj.rows) }));
+      const dateStats = Object.entries(byDate).map(([date, list]) => ({ date, ...summarize(list) }));
+
+      const topRevChannel = [...channelStats].sort((a, b) => b.revenue_vnd - a.revenue_vnd)[0];
+      const topRoasCamp = [...campaignStats].sort((a, b) => b.roas - a.roas)[0];
+      const peakDay = [...dateStats].sort((a, b) => b.revenue_vnd - a.revenue_vnd)[0];
+      const lowRoasCamp = [...campaignStats].sort((a, b) => a.roas - b.roas)[0];
+
+      const items = [
+        {
+          icon: "🏆", bg: "#ecfdf5", color: "#059669",
+          title: "Kênh đóng góp cao nhất",
+          main: topRevChannel.name,
+          desc: `${fmtCompactMoney(topRevChannel.revenue_vnd)} (${totals.revenue_vnd ? ((topRevChannel.revenue_vnd / totals.revenue_vnd) * 100).toFixed(1) : 0}% tổng DT)`
+        },
+        {
+          icon: "⚡", bg: "#eff6ff", color: "#2563eb",
+          title: "Chiến dịch hiệu quả nhất",
+          main: topRoasCamp.name,
+          desc: `ROAS ${topRoasCamp.roas.toFixed(2).replace(".", ",")}x • CPA ${fmtCompactMoney(topRoasCamp.cpa)}`
+        },
+        {
+          icon: "📈", bg: "#fff1f2", color: "#e11d48",
+          title: "Ngày đạt đỉnh doanh thu",
+          main: fmtDateFull(peakDay.date),
+          desc: `${fmtCompactMoney(peakDay.revenue_vnd)} • ${fmtNum(peakDay.conversions)} đơn hàng`
+        },
+        {
+          icon: "🎯", bg: "#fffbeb", color: "#d97706",
+          title: "Cần theo dõi tối ưu",
+          main: lowRoasCamp.name,
+          desc: `ROAS ${lowRoasCamp.roas.toFixed(2).replace(".", ",")}x • Chi ${fmtCompactMoney(lowRoasCamp.spend_vnd)}`
+        }
+      ];
+
+      $("insightsGrid").innerHTML = items.map((it) => `
+        <div class="insight-card">
+          <div class="insight-icon" style="background:${it.bg};color:${it.color}">${it.icon}</div>
+          <div>
+            <div class="insight-title">${it.title}</div>
+            <div class="insight-main">${escapeHtml(it.main)}</div>
+            <div class="insight-desc">${escapeHtml(it.desc)}</div>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function renderTrendChart(rows) {
+      const wrap = $("trendChartWrap");
+      const legend = $("trendLegend");
+      if (!rows.length) {
+        wrap.innerHTML = `<div class="empty-state">Không có dữ liệu để vẽ biểu đồ xu hướng.</div>`;
+        legend.innerHTML = "";
+        return;
+      }
+
+      const byDate = {};
+      rows.forEach((r) => {
+        if (!byDate[r.date]) byDate[r.date] = [];
+        byDate[r.date].push(r);
+      });
+      const series = Object.keys(byDate).sort().map((date) => ({ date, ...summarize(byDate[date]) }));
+
+      const isFinance = state.trendMode === "finance";
+      $("trendChartTitle").textContent = isFinance
+        ? "Xu hướng Doanh thu & Chi phí theo ngày"
+        : "Xu hướng Lượt nhấp & Chuyển đổi theo ngày";
+
+      const W = 740, H = 290;
+      const pad = { top: 20, right: 24, bottom: 38, left: 66 };
+      const plotW = W - pad.left - pad.right;
+      const plotH = H - pad.top - pad.bottom;
+
+      const primaryVals = series.map((d) => isFinance ? d.revenue_vnd : d.clicks);
+      const secondaryVals = series.map((d) => isFinance ? d.spend_vnd : d.conversions);
+      const maxPrimary = Math.max(...primaryVals, isFinance ? Math.max(...secondaryVals) : 1) * 1.15 || 1;
+      const maxSecondary = isFinance ? maxPrimary : (Math.max(...secondaryVals, 1) * 1.2 || 1);
+
+      const stepX = plotW / Math.max(series.length, 1);
+      const barW = Math.min(34, Math.max(12, stepX * 0.44));
+
+      const yGridCount = 4;
+      let gridSvg = "";
+      for (let i = 0; i <= yGridCount; i++) {
+        const y = pad.top + (plotH * i) / yGridCount;
+        const val = maxPrimary * (1 - i / yGridCount);
+        gridSvg += `<line x1="${pad.left}" y1="${y}" x2="${W - pad.right}" y2="${y}" stroke="#e2e8f0" stroke-dasharray="${i === yGridCount ? "0" : "4 4"}" />`;
+        gridSvg += `<text x="${pad.left - 10}" y="${y + 4}" text-anchor="end" font-size="11" fill="#64748b">${isFinance ? fmtCompactMoney(val).replace(" ₫", "") : fmtCompactNum(val)}</text>`;
+      }
+
+      const primaryColor = isFinance ? "#2563eb" : "#0284c7";
+      const secondaryColor = isFinance ? "#f59e0b" : "#059669";
+
+      const linePoints = series.map((d, i) => {
+        const cx = pad.left + stepX * i + stepX / 2;
+        const val = isFinance ? d.spend_vnd : d.conversions;
+        const cy = pad.top + plotH - (val / maxSecondary) * plotH;
+        return { cx, cy, d };
+      });
+
+      const polylineStr = linePoints.map((p) => `${p.cx.toFixed(1)},${p.cy.toFixed(1)}`).join(" ");
+
+      let barsSvg = "";
+      let xLabelsSvg = "";
+      let hitAreasSvg = "";
+
+      series.forEach((d, i) => {
+        const cx = pad.left + stepX * i + stepX / 2;
+        const val = isFinance ? d.revenue_vnd : d.clicks;
+        const h = (val / maxPrimary) * plotH;
+        const y = pad.top + plotH - h;
+
+        barsSvg += `<rect x="${(cx - barW / 2).toFixed(1)}" y="${y.toFixed(1)}" width="${barW.toFixed(1)}" height="${Math.max(2, h).toFixed(1)}" rx="5" fill="${primaryColor}" fill-opacity="0.86" />`;
+        xLabelsSvg += `<text x="${cx.toFixed(1)}" y="${H - 12}" text-anchor="middle" font-size="11.5" fill="#475569" font-weight="600">${fmtDateShort(d.date)}</text>`;
+
+        hitAreasSvg += `<rect class="trend-hit" data-idx="${i}" x="${(pad.left + stepX * i).toFixed(1)}" y="${pad.top}" width="${stepX.toFixed(1)}" height="${plotH}" fill="transparent" style="cursor:pointer" />`;
+      });
+
+      const dotsSvg = linePoints.map((p) =>
+        `<circle cx="${p.cx.toFixed(1)}" cy="${p.cy.toFixed(1)}" r="4.5" fill="#ffffff" stroke="${secondaryColor}" stroke-width="2.6" />`
+      ).join("");
+
+      wrap.innerHTML = `
+        <svg viewBox="0 0 ${W} ${H}" width="100%" style="display:block; overflow:visible">
+          ${gridSvg}
+          ${barsSvg}
+          <polyline fill="none" stroke="${secondaryColor}" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" points="${polylineStr}" />
+          ${dotsSvg}
+          ${xLabelsSvg}
+          ${hitAreasSvg}
+        </svg>
+      `;
+
+      legend.innerHTML = isFinance
+        ? `<span class="legend-item"><span class="legend-swatch" style="background:${primaryColor}"></span>Doanh thu (Cột)</span>
+           <span class="legend-item"><span class="legend-swatch" style="background:${secondaryColor}; border-radius:99px"></span>Chi phí quảng cáo (Đường)</span>`
+        : `<span class="legend-item"><span class="legend-swatch" style="background:${primaryColor}"></span>Lượt nhấp - Clicks (Cột)</span>
+           <span class="legend-item"><span class="legend-swatch" style="background:${secondaryColor}; border-radius:99px"></span>Chuyển đổi - Conversions (Đường, tỷ lệ riêng)</span>`;
+
+      wrap.querySelectorAll(".trend-hit").forEach((el) => {
+        el.addEventListener("mouseenter", (evt) => {
+          const d = series[Number(el.dataset.idx)];
+          showTooltip(evt, `Ngày ${fmtDateFull(d.date)}`, [
+            ["Doanh thu", fmtMoney(d.revenue_vnd)],
+            ["Chi phí", fmtMoney(d.spend_vnd)],
+            ["ROAS", d.roas.toFixed(2).replace(".", ",") + "x"],
+            ["Lượt nhấp", fmtNum(d.clicks)],
+            ["Chuyển đổi", fmtNum(d.conversions)]
+          ]);
+        });
+        el.addEventListener("mousemove", moveTooltip);
+        el.addEventListener("mouseleave", hideTooltip);
+      });
+    }
+
+    function renderDonutChart(rows, totals) {
+      const wrap = $("donutWrap");
+      if (!rows.length || !totals.revenue_vnd) {
+        wrap.innerHTML = `<div class="empty-state" style="width:100%">Chưa có dữ liệu doanh thu.</div>`;
+        return;
+      }
+
+      const byChannel = {};
+      rows.forEach((r) => {
+        if (!byChannel[r.channel]) byChannel[r.channel] = [];
+        byChannel[r.channel].push(r);
+      });
+      const items = Object.entries(byChannel)
+        .map(([channel, list]) => ({ channel, ...summarize(list) }))
+        .sort((a, b) => b.revenue_vnd - a.revenue_vnd);
+
+      const size = 204, cx = 102, cy = 102, r = 74, strokeW = 28;
+      const circ = 2 * Math.PI * r;
+      let offset = 0;
+
+      const slicesSvg = items.map((it, idx) => {
+        const share = it.revenue_vnd / totals.revenue_vnd;
+        const dash = share * circ;
+        const gap = items.length > 1 ? 3 : 0;
+        const color = getChannelColor(it.channel);
+        const slice = `<circle class="donut-slice" data-idx="${idx}" cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${color}" stroke-width="${strokeW}" stroke-dasharray="${Math.max(1, dash - gap)} ${circ}" stroke-dashoffset="${-offset}" transform="rotate(-90 ${cx} ${cy})" style="cursor:pointer; transition:stroke-width 0.15s ease" />`;
+        offset += dash;
+        return slice;
+      }).join("");
+
+      const legendHtml = items.map((it) => {
+        const sharePct = ((it.revenue_vnd / totals.revenue_vnd) * 100).toFixed(1).replace(".", ",");
+        const color = getChannelColor(it.channel);
+        return `
+          <div class="donut-legend-row" data-channel="${escapeHtml(it.channel)}" title="Nhấp để lọc theo kênh ${escapeHtml(it.channel)}">
+            <div class="donut-legend-left">
+              <span class="channel-dot" style="background:${color}"></span>
+              <span>${escapeHtml(it.channel)}</span>
+            </div>
+            <div class="donut-legend-right">
+              <div class="donut-legend-val">${sharePct}%</div>
+              <div class="donut-legend-meta">${fmtCompactMoney(it.revenue_vnd)}</div>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      wrap.innerHTML = `
+        <div class="donut-svg-wrap">
+          <svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+            <circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="#f1f5f9" stroke-width="${strokeW}" />
+            ${slicesSvg}
+            <text x="${cx}" y="${cy - 5}" text-anchor="middle" font-size="11" font-weight="600" fill="#64748b">TỔNG DOANH THU</text>
+            <text x="${cx}" y="${cy + 16}" text-anchor="middle" font-size="16" font-weight="800" fill="#0f172a">${fmtCompactMoney(totals.revenue_vnd)}</text>
+          </svg>
+        </div>
+        <div class="donut-legend">${legendHtml}</div>
+      `;
+
+      wrap.querySelectorAll(".donut-slice").forEach((el) => {
+        el.addEventListener("mouseenter", (evt) => {
+          el.setAttribute("stroke-width", strokeW + 4);
+          const it = items[Number(el.dataset.idx)];
+          showTooltip(evt, it.channel, [
+            ["Doanh thu", fmtMoney(it.revenue_vnd)],
+            ["Tỷ trọng", ((it.revenue_vnd / totals.revenue_vnd) * 100).toFixed(1) + "%"],
+            ["Chi phí", fmtMoney(it.spend_vnd)],
+            ["ROAS", it.roas.toFixed(2).replace(".", ",") + "x"]
+          ]);
+        });
+        el.addEventListener("mousemove", moveTooltip);
+        el.addEventListener("mouseleave", () => {
+          el.setAttribute("stroke-width", strokeW);
+          hideTooltip();
+        });
+        el.addEventListener("click", () => {
+          const ch = items[Number(el.dataset.idx)].channel;
+          toggleChannelFilter(ch);
+        });
+      });
+
+      wrap.querySelectorAll(".donut-legend-row").forEach((el) => {
+        el.addEventListener("click", () => toggleChannelFilter(el.dataset.channel));
+      });
+    }
+
+    function toggleChannelFilter(channel) {
+      state.filters.channel = state.filters.channel === channel ? "ALL" : channel;
+      $("filterChannel").value = state.filters.channel;
+      renderAll();
+    }
+
+    function renderChannelBars(rows) {
+      const wrap = $("channelBarsWrap");
+      if (!rows.length) {
+        wrap.innerHTML = `<div class="empty-state">Chưa có dữ liệu kênh.</div>`;
+        return;
+      }
+
+      const byChannel = {};
+      rows.forEach((r) => {
+        if (!byChannel[r.channel]) byChannel[r.channel] = [];
+        byChannel[r.channel].push(r);
+      });
+      const items = Object.entries(byChannel)
+        .map(([channel, list]) => ({ channel, ...summarize(list) }))
+        .sort((a, b) => b.revenue_vnd - a.revenue_vnd);
+
+      const maxRev = Math.max(...items.map((i) => Math.max(i.revenue_vnd, i.spend_vnd)), 1);
+
+      wrap.innerHTML = items.map((it) => {
+        const revW = (it.revenue_vnd / maxRev) * 100;
+        const spendW = (it.spend_vnd / maxRev) * 100;
+        const color = getChannelColor(it.channel);
+        const roasCls = it.roas >= 5 ? "roas-high" : it.roas >= 3 ? "roas-mid" : "roas-low";
+        return `
+          <div class="channel-bar-item">
+            <div class="channel-bar-top">
+              <span class="channel-name">
+                <span class="channel-dot" style="background:${color}"></span>
+                ${escapeHtml(it.channel)}
+              </span>
+              <div class="channel-metrics">
+                <span>DT: <strong>${fmtCompactMoney(it.revenue_vnd)}</strong></span>
+                <span>Chi: ${fmtCompactMoney(it.spend_vnd)}</span>
+                <span class="roas-pill ${roasCls}">ROAS ${it.roas.toFixed(2).replace(".", ",")}x</span>
+              </div>
+            </div>
+            <div class="bar-track" title="Doanh thu: ${fmtMoney(it.revenue_vnd)} | Chi phí: ${fmtMoney(it.spend_vnd)}">
+              <div class="bar-fill-rev" style="width:${revW.toFixed(1)}%; background:${color}"></div>
+              <div class="bar-fill-spend" style="width:${spendW.toFixed(1)}%"></div>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderFunnel(t) {
+      const wrap = $("funnelWrap");
+      if (!t.impressions) {
+        wrap.innerHTML = `<div class="empty-state">Chưa có dữ liệu phễu chuyển đổi.</div>`;
+        return;
+      }
+
+      const steps = [
+        { name: "1. Hiển thị (Impressions)", value: t.impressions, pctOfTop: 100, width: 100, color: "#3b82f6", rateFromPrev: null },
+        {
+          name: "2. Lượt nhấp (Clicks)",
+          value: t.clicks,
+          pctOfTop: (t.clicks / t.impressions) * 100,
+          width: Math.max(24, Math.min(76, 30 + (t.clicks / t.impressions) * 700)),
+          color: "#0284c7",
+          rateFromPrev: `CTR: ${fmtPct(t.ctr)} từ Hiển thị`
+        },
+        {
+          name: "3. Khách tiềm năng (Leads)",
+          value: t.leads,
+          pctOfTop: (t.leads / t.impressions) * 100,
+          width: Math.max(18, Math.min(58, 22 + (t.clicks ? (t.leads / t.clicks) * 110 : 0))),
+          color: "#7c3aed",
+          rateFromPrev: `Click → Lead: ${t.clicks ? fmtPct(t.leads / t.clicks) : "0%"}`
+        },
+        {
+          name: "4. Chuyển đổi (Conversions)",
+          value: t.conversions,
+          pctOfTop: (t.conversions / t.impressions) * 100,
+          width: Math.max(14, Math.min(44, 16 + (t.leads ? (t.conversions / t.leads) * 65 : 0))),
+          color: "#059669",
+          rateFromPrev: `Lead → Đơn hàng: ${t.leads ? fmtPct(t.conversions / t.leads) : "0%"}`
+        }
+      ];
+
+      wrap.innerHTML = steps.map((s) => `
+        <div class="funnel-step">
+          ${s.rateFromPrev ? `<div class="funnel-arrow">↳ <strong>${s.rateFromPrev}</strong></div>` : ""}
+          <div class="funnel-step-header">
+            <span class="funnel-step-name">${s.name}</span>
+            <span class="funnel-step-nums"><strong>${fmtNum(s.value)}</strong></span>
+          </div>
+          <div class="funnel-bar-bg">
+            <div class="funnel-bar-fill" style="width:${s.width.toFixed(1)}%; background:${s.color}">
+              ${s.pctOfTop >= 1 ? s.pctOfTop.toFixed(1).replace(".", ",") + "%" : s.pctOfTop.toFixed(2).replace(".", ",") + "%"}
+            </div>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function renderTable(rows) {
+      const q = state.search.trim().toLowerCase();
+      let records = [];
+
+      if (state.tableView === "campaign") {
+        const map = {};
+        rows.forEach((r) => {
+          if (!map[r.campaign_id]) {
+            map[r.campaign_id] = {
+              campaign_id: r.campaign_id,
+              campaign_name: r.campaign_name,
+              channel: r.channel,
+              region: r.region,
+              status: r.status,
+              latestDate: r.date,
+              rows: []
+            };
+          }
+          map[r.campaign_id].rows.push(r);
+          if (r.date >= map[r.campaign_id].latestDate) {
+            map[r.campaign_id].latestDate = r.date;
+            map[r.campaign_id].status = r.status;
+          }
+        });
+        records = Object.values(map).map((item) => ({
+          campaign_id: item.campaign_id,
+          campaign_name: item.campaign_name,
+          channel: item.channel,
+          region: item.region,
+          status: item.status,
+          ...summarize(item.rows)
+        }));
+      } else {
+        records = rows.map((r) => ({
+          ...r,
+          ctr: r.impressions ? r.clicks / r.impressions : 0,
+          cvr: r.clicks ? r.conversions / r.clicks : 0,
+          roas: r.spend_vnd ? r.revenue_vnd / r.spend_vnd : 0,
+          cpa: r.conversions ? r.spend_vnd / r.conversions : 0
+        }));
+      }
+
+      if (q) {
+        records = records.filter((r) =>
+          r.campaign_name.toLowerCase().includes(q) ||
+          r.campaign_id.toLowerCase().includes(q) ||
+          r.channel.toLowerCase().includes(q) ||
+          (r.date || "").includes(q)
+        );
+      }
+
+      const cols = state.tableView === "campaign"
+        ? [
+            { key: "campaign_id", label: "Mã", align: "left" },
+            { key: "campaign_name", label: "Tên chiến dịch", align: "left" },
+            { key: "channel", label: "Kênh", align: "left" },
+            { key: "status", label: "Trạng thái", align: "left" },
+            { key: "impressions", label: "Hiển thị" },
+            { key: "clicks", label: "Clicks" },
+            { key: "ctr", label: "CTR" },
+            { key: "conversions", label: "Chuyển đổi" },
+            { key: "spend_vnd", label: "Chi phí" },
+            { key: "revenue_vnd", label: "Doanh thu" },
+            { key: "roas", label: "ROAS" },
+            { key: "cpa", label: "CPA" }
+          ]
+        : [
+            { key: "date", label: "Ngày", align: "left" },
+            { key: "campaign_name", label: "Tên chiến dịch", align: "left" },
+            { key: "channel", label: "Kênh", align: "left" },
+            { key: "status", label: "Trạng thái", align: "left" },
+            { key: "impressions", label: "Hiển thị" },
+            { key: "clicks", label: "Clicks" },
+            { key: "ctr", label: "CTR" },
+            { key: "conversions", label: "Chuyển đổi" },
+            { key: "spend_vnd", label: "Chi phí" },
+            { key: "revenue_vnd", label: "Doanh thu" },
+            { key: "roas", label: "ROAS" }
+          ];
+
+      if (!cols.some((c) => c.key === state.sortKey)) {
+        state.sortKey = state.tableView === "daily" ? "date" : "revenue_vnd";
+      }
+
+      records.sort((a, b) => {
+        const va = a[state.sortKey], vb = b[state.sortKey];
+        const cmp = typeof va === "number" ? va - vb : String(va).localeCompare(String(vb), "vi");
+        return state.sortDir === "asc" ? cmp : -cmp;
+      });
+
+      $("tableHead").innerHTML = `<tr>${cols.map((c) => {
+        const arrow = state.sortKey === c.key ? (state.sortDir === "asc" ? " ▲" : " ▼") : "";
+        return `<th class="${c.align === "left" ? "left" : ""}" data-sort="${c.key}">${c.label}${arrow}</th>`;
+      }).join("")}</tr>`;
+
+      if (!records.length) {
+        $("tableBody").innerHTML = `<tr><td colspan="${cols.length}" class="empty-state">Không tìm thấy dòng dữ liệu nào phù hợp.</td></tr>`;
+        $("tableFoot").innerHTML = "";
+        return;
+      }
+
+      const statusBadge = (s) => {
+        const cls = s === "Đang chạy" ? "status-running" : s === "Hoàn thành" ? "status-done" : "status-paused";
+        return `<span class="status-pill ${cls}">${escapeHtml(s)}</span>`;
+      };
+
+      const roasBadge = (v) => {
+        const cls = v >= 5 ? "roas-high" : v >= 3 ? "roas-mid" : "roas-low";
+        return `<span class="roas-pill ${cls}">${v.toFixed(2).replace(".", ",")}x</span>`;
+      };
+
+      $("tableBody").innerHTML = records.map((r) => `<tr>${cols.map((c) => {
+        if (c.key === "date") return `<td class="left">${fmtDateFull(r.date)}</td>`;
+        if (c.key === "campaign_id") return `<td class="left" style="font-weight:700;color:#475569">${escapeHtml(r.campaign_id)}</td>`;
+        if (c.key === "campaign_name") return `<td class="left" style="font-weight:600">${escapeHtml(r.campaign_name)}</td>`;
+        if (c.key === "channel") return `<td class="left"><span class="channel-tag"><span class="channel-dot" style="background:${getChannelColor(r.channel)}"></span>${escapeHtml(r.channel)}</span></td>`;
+        if (c.key === "status") return `<td class="left">${statusBadge(r.status)}</td>`;
+        if (c.key === "impressions" || c.key === "clicks" || c.key === "conversions") return `<td>${fmtNum(r[c.key])}</td>`;
+        if (c.key === "ctr") return `<td>${fmtPct(r.ctr)}</td>`;
+        if (c.key === "spend_vnd") return `<td>${fmtMoney(r.spend_vnd)}</td>`;
+        if (c.key === "revenue_vnd") return `<td style="font-weight:700">${fmtMoney(r.revenue_vnd)}</td>`;
+        if (c.key === "roas") return `<td>${roasBadge(r.roas)}</td>`;
+        if (c.key === "cpa") return `<td>${fmtMoney(r.cpa)}</td>`;
+        return `<td>${escapeHtml(r[c.key])}</td>`;
+      }).join("")}</tr>`).join("");
+
+      const foot = summarize(records);
+      $("tableFoot").innerHTML = `<tr>${cols.map((c, idx) => {
+        if (idx === 0) return `<td class="left" colspan="4">Tổng cộng (${records.length} dòng)</td>`;
+        if (idx < 4) return "";
+        if (c.key === "impressions") return `<td>${fmtNum(foot.impressions)}</td>`;
+        if (c.key === "clicks") return `<td>${fmtNum(foot.clicks)}</td>`;
+        if (c.key === "ctr") return `<td>${fmtPct(foot.ctr)}</td>`;
+        if (c.key === "conversions") return `<td>${fmtNum(foot.conversions)}</td>`;
+        if (c.key === "spend_vnd") return `<td>${fmtMoney(foot.spend_vnd)}</td>`;
+        if (c.key === "revenue_vnd") return `<td>${fmtMoney(foot.revenue_vnd)}</td>`;
+        if (c.key === "roas") return `<td>${foot.roas.toFixed(2).replace(".", ",")}x</td>`;
+        if (c.key === "cpa") return `<td>${fmtMoney(foot.cpa)}</td>`;
+        return `<td></td>`;
+      }).join("")}</tr>`;
+
+      $("tableHead").querySelectorAll("th[data-sort]").forEach((th) => {
+        th.addEventListener("click", () => {
+          const key = th.dataset.sort;
+          if (state.sortKey === key) state.sortDir = state.sortDir === "asc" ? "desc" : "asc";
+          else { state.sortKey = key; state.sortDir = "desc"; }
+          renderTable(rows);
+        });
+      });
+    }
+
+    // Event bindings
+    $("filterChannel").addEventListener("change", (e) => { state.filters.channel = e.target.value; renderAll(); });
+    $("filterRegion").addEventListener("change", (e) => { state.filters.region = e.target.value; renderAll(); });
+    $("filterStatus").addEventListener("change", (e) => { state.filters.status = e.target.value; renderAll(); });
+    $("filterStart").addEventListener("change", (e) => { state.filters.start = e.target.value; renderAll(); });
+    $("filterEnd").addEventListener("change", (e) => { state.filters.end = e.target.value; renderAll(); });
+    $("resetFiltersBtn").addEventListener("click", () => { populateFilterOptions(); state.search = ""; $("tableSearch").value = ""; renderAll(); });
+
+    $("trendModeToggle").querySelectorAll("button").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        $("trendModeToggle").querySelectorAll("button").forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        state.trendMode = btn.dataset.mode;
+        renderTrendChart(getFilteredRows());
+      });
+    });
+
+    $("tableViewToggle").querySelectorAll("button").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        $("tableViewToggle").querySelectorAll("button").forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        state.tableView = btn.dataset.view;
+        renderTable(getFilteredRows());
+      });
+    });
+
+    $("tableSearch").addEventListener("input", (e) => {
+      state.search = e.target.value;
+      renderTable(getFilteredRows());
+    });
+
+    // File upload & drag-drop
+    function handleFile(file) {
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => loadCsvData(e.target.result, `File đã tải: ${file.name}`);
+      reader.readAsText(file, "UTF-8");
+    }
+
+    $("uploadBtn").addEventListener("click", () => $("csvFileInput").click());
+    $("csvFileInput").addEventListener("change", (e) => { handleFile(e.target.files[0]); e.target.value = ""; });
+
+    let dragCounter = 0;
+    window.addEventListener("dragenter", (e) => { e.preventDefault(); dragCounter++; $("dropOverlay").classList.add("active"); });
+    window.addEventListener("dragover", (e) => e.preventDefault());
+    window.addEventListener("dragleave", () => { dragCounter--; if (dragCounter <= 0) { dragCounter = 0; $("dropOverlay").classList.remove("active"); } });
+    window.addEventListener("drop", (e) => {
+      e.preventDefault();
+      dragCounter = 0;
+      $("dropOverlay").classList.remove("active");
+      if (e.dataTransfer.files && e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+    });
+
+    // Download CSV
+    $("downloadBtn").addEventListener("click", () => {
+      const blob = new Blob(["\uFEFF" + state.rawCsv], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "campaign_data.csv";
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    // Initialize: render embedded CSV immediately, and auto-sync with ./campaign_data.csv if served over HTTP(S)
+    (function init() {
+      const embedded = $("embeddedCsvData").textContent.trim();
+      loadCsvData(embedded, "Dữ liệu mẫu: campaign_data.csv");
+
+      if (location.protocol === "http:" || location.protocol === "https:") {
+        fetch("./campaign_data.csv")
+          .then((res) => (res.ok ? res.text() : Promise.reject()))
+          .then((text) => {
+            if (text && text.trim()) loadCsvData(text, "Trực tiếp từ: campaign_data.csv");
+          })
+          .catch(() => {});
+      }
+    })();
+  </script>
+</body>
+</html>
